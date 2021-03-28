@@ -1,0 +1,82 @@
+// CHROME = EXEC(“C:\Program Files\Google\Chrome\Application\chrome.exe”)
+// クリック位置の調整
+Const offset=15
+//現在開いているchrome を選択、アクティブに。
+id = GETID("Google Chrome","Chrome_WidgetWin_1",-1)
+
+SLEEP(1)
+
+// URL="https://bill.ntt-finance.co.jp/mem-view/WA001G01E00.do"
+
+//URL入力欄へカーソルを移動
+sckey(id, vk_alt,vk_d)
+
+//URLを削除
+sckey(id, vk_delete)
+
+//googleへの移動文字列を入力
+sendstr(id,"https://bill.ntt-finance.co.jp/mem-view/WA001G01E00.do")
+
+//enterを送信し、移動
+sckey(id, vk_enter)
+
+
+waitIMG(".\img\logoin.bmp",3)
+// ログインボタンをクリック
+clickIMG(".\img\logoin.bmp",3)
+
+waitIMG(".\img\syokai.bmp",3)
+// 照会ボタンをクリック
+clickIMG(".\img\syokai.bmp",3)
+SLEEP(3)
+for a = 1 to 22
+KBD(VK_TAB,CLICK,100)
+next
+waitIMG(".\img\syosai.bmp",3)
+// 詳細ボタンをクリック
+clickIMG(".\img\syosai.bmp",3)
+
+waitIMG(".\img\csvbotton.bmp",3)
+// ｃｓｖボタンをクリック
+clickIMG(".\img\csvbotton.bmp",3)
+
+waitIMG(".\img\downloadbotton.bmp",3)
+// downloadボタンをクリック
+clickIMG(".\img\downloadbotton.bmp",3)
+
+
+
+
+// 画像を検出してその位置をクリックする
+Procedure clickIMG(imgFileName,wait)
+  IFB CHKIMG(imgFileName) 
+    BTN(LEFT,CLICK, G_IMG_X+offset, G_IMG_Y+offset)
+    Sleep(wait)
+  ELSE
+    MSGBOX("画像認識に失敗しました。")
+    EXITEXIT
+  ENDIF
+Fend
+
+// 画像を検出してその位置をダブルクリックする
+Procedure wclickIMG(imgFileName,wait)
+  IFB CHKIMG(imgFileName) 
+    BTN(LEFT,CLICK, G_IMG_X+offset, G_IMG_Y+offset)
+    BTN(LEFT,CLICK, G_IMG_X+offset, G_IMG_Y+offset)
+    Sleep(wait)
+  ELSE
+    MSGBOX("画像認識に失敗しました。")
+    EXITEXIT
+  ENDIF
+Fend
+
+// 画像を検出するまで待ち受ける
+Procedure waitIMG(imgFileName,wait)
+  While 1
+    IFB CHKIMG(imgFileName) 
+      break
+    ELSE
+      Sleep(wait)
+    ENDIF
+  Wend
+Fend

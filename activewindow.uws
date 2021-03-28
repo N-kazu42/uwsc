@@ -1,0 +1,9 @@
+n = GETALLWIN()
+PRINT "ウィンドウの数:" + n
+IFB n > 0
+ FOR i = 0 TO (n - 1)
+  PRINT ALL_WIN_ID[i] + ":" + STATUS(ALL_WIN_ID[i], ST_TITLE)
+ NEXT
+ELSE
+ PRINT "ウィンドウが見つかりませんでした"
+ENDIF
