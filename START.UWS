@@ -1,18 +1,26 @@
 DIM flg = FALSE
 DIM path = "C:\Users\shioa\AppData\Local\LINE\bin\LineLauncher.exe"
-
+DIM handan = 0
 GETALLWIN()
-
+// 起動しているかすべてのidから探し出す
 FOR item IN ALL_WIN_ID[]
 IFB STATUS(item, ST_PATH) = path THEN
 flg = TRUE
 BREAK
 ENDIF
 NEXT
-
+// 起動していなかった時の処理
 IFB flg = FALSE THEN 
 EXEC(path)
-Sleep(1)
+Sleep(4)
+handan = 1
+ENDIF
+
+// Repeat
+// Sleep(0.1)
+// Uutil !path.busy AND path.readystate=4
+
+IFB handan = 1 THEN
 KBD(VK_N,CLICK,6)
 KBD(VK_A,CLICK,3)
 KBD(VK_G,DOWN,9)
@@ -27,5 +35,5 @@ KBD(VK_NUMPAD6,CLICK,3)
 KBD(VK_NUMPAD7,CLICK,5)
 KBD(VK_NUMPAD5,CLICK,5)
 KBD(VK_RETURN,CLICK,4)
-// sckey(GETID("LINE"),vk_alt,vk_f4)
+ctrlwin(GETID("LINE"),min)
 ENDIF
