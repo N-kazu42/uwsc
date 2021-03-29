@@ -1,0 +1,99 @@
+// ExcelファイルPathを設定
+
+oExcel = CreateOLEObj("Excel.Application")
+oExcel.visible = true   //可視化
+
+// Excelの起動
+
+
+Try 
+  //指定したファイルのオープン
+    
+oEXCEL.workbooks.open("C:\Users\RPC45\Desktop\WORK\uwsc\パナソニック発注入力\paan.xlsm")
+Except
+  // ファイルが見つからない場合のエラー処理
+  Msgbox("Excelファイルが見つかりません")
+
+  //このプログラムを終了
+  EXITEXIT
+EndTry
+
+// 最大行数、列数の指定
+Const MAX_ROW=11
+Const MAX_COL=6
+
+// URLを設定
+// Const url="https://takashi002013.com/contact/"
+
+Dim data[MAX_ROW][MAX_COL]
+
+ //左上のセルの選択(１行目はヘッダ行のため無視)
+oExcel.Cells(2,1).Select           
+
+// データを読み込み
+For i=0 To MAX_ROW
+  For j=0 To MAX_COL
+    //回りくどいがActiveCellをOffsetで移動させるという方式
+    data[i][j]=oExcel.ActiveCell.Offset(i,j).Value 
+  Next
+Next
+
+// Excelを閉じる
+id = HNDtoID( oExcel.hwnd )
+CtrlWin(id,Close)
+
+
+// IEを起動する
+FUKIDASI("IE起動中") 
+ie = CreateOLEobj("InternetExplorer.Application")
+
+// IEを表示させる
+ie.visible = true
+
+// 左上に表示させる
+id = HNDtoID( ie.hwnd )
+ACW( id, 0, 0 )
+
+// IEを最大化表示
+CtrlWin( id, MAX )
+
+
+// URLを表示
+FUKIDASI("Webサイトを表示") 
+// ie.navigate( url )
+// waitIE( ie )
+
+// Webサイトに情報を入力
+y=1
+For i=0 To MAX_ROW
+  FUKIDASI((i+1)+"行目のデータをWebサイトに入力中") 
+  
+  IESetData(ie,data[i][1],"hinb"+y)        // テキスト入力
+  IESetData(ie,data[i][2],"suu" +y) // テキスト入力
+    y = y + 1
+  Sleep(5)
+
+Next
+
+
+Sleep(5)
+
+//IEを終了
+ie.Quit
+
+//IESetData(ie,"TAG=input",1) // ボタン
+
+//SetSlider(id,GetSlider(id)+10)
+//Sleep(3)
+//clickIMG("send.bmp")
+//IESetData(ie,True,"PC","Yes") // RADIO
+//IESetData(ie,"コメントテスト","comment") // TEXTAREA
+
+// IEが完全に立ち上がるまでの間、待ち続ける
+Procedure waitIE( ie)
+  repeat
+    Sleep( 0.1 )
+  until ( ! ie.Busy ) and ( ie.ReadyState = 4 )
+  
+    Sleep( 0.2 )
+Fend

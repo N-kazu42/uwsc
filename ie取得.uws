@@ -1,0 +1,7 @@
+ie=GETACTIVEOLEOBJ("InternetExplorer.Application")
+
+//タイトル
+title=ie.document.title
+
+//url
+url=ie.document.url
