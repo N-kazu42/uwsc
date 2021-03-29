@@ -1,0 +1,78 @@
+DIM flg = FALSE
+DIM path = "C:\Users\RPC45\AppData\Local\LINE\bin\LineLauncher.exe"
+DIM handan = 0
+Const offset=15
+IF GETKEYSTATE(TGL_CAPSLOCK) = TRUE THEN KBD(VK_CAPITAL, CLICK)  //capslock
+GETALLWIN()
+// 起動しているかすべてのidから探し出す
+FOR item IN ALL_WIN_ID[]
+IFB STATUS(item, ST_PATH) = path THEN
+flg = TRUE
+BREAK
+ENDIF
+NEXT
+// 起動していなかった時の処理
+IFB flg = FALSE THEN 
+EXEC(path)
+Sleep(4)
+handan = 1
+ENDIF
+
+// Repeat
+// Sleep(0.1)
+// Uutil !path.busy AND path.readystate=4
+
+IFB handan = 1 THEN
+KBD(VK_N,CLICK,6)
+KBD(VK_A,CLICK,3)
+KBD(VK_G,DOWN,9)
+KBD(VK_A,DOWN,7)
+KBD(VK_G,UP,4)
+KBD(VK_A,UP,11)
+KBD(VK_NUMPAD6,CLICK,17)
+KBD(VK_NUMPAD5,CLICK,14)
+KBD(VK_NUMPAD1,CLICK,15)
+KBD(VK_NUMPAD5,CLICK,29)
+KBD(VK_NUMPAD6,CLICK,3)
+KBD(VK_NUMPAD7,CLICK,5)
+KBD(VK_NUMPAD5,CLICK,5)
+KBD(VK_RETURN,CLICK,4)
+ctrlwin(GETID("LINE"),min)
+ENDIF
+//----------------------------------------------------------------------
+flg = FALSE
+path = "C:\IC-MANAGER_VER6\ICMML0000.exe"
+handan = 0
+IF GETKEYSTATE(TGL_IME) THEN KBD(VK_KANJI, CLICK)  //ひらがなになっていないか
+IF GETKEYSTATE(TGL_CAPSLOCK) = FALSE THEN KBD(VK_CAPITAL, CLICK)  //capslock
+
+GETALLWIN()
+// 起動しているかすべてのidから探し出す
+FOR item IN ALL_WIN_ID[]
+IFB STATUS(item, ST_PATH) = path THEN
+flg = TRUE
+BREAK
+ENDIF
+NEXT
+// 起動していなかった時の処理
+IFB flg = FALSE THEN 
+EXEC(path)
+Sleep(4)
+handan = 1
+ENDIF
+IFB handan = 1 THEN
+KBD(VK_RETURN,CLICK,8)
+KBD(VK_X,CLICK,6)
+KBD(VK_F,CLICK,8)
+KBD(VK_P,CLICK,4)
+KBD(VK_Q,CLICK,15)
+KBD(VK_X,CLICK,20)
+KBD(VK_NUMPAD4,CLICK,2)
+KBD(VK_RETURN,CLICK,8)
+ENDIF
+
+//-----------------------------------------------------------------
+ACW(GETID("�̔��Ǘ��V�X�e�� IC-M_Ver6 [����c�Ə�    24:����@�a��]","TFrmMML0000"),613,336,1017,656,0)
+BTN(LEFT,CLICK,710,829,218)
+BTN(LEFT,CLICK,1240,540,1093)
+BTN(LEFT,CLICK,1246,632,15)
