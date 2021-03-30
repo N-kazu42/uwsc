@@ -1,0 +1,128 @@
+// CHROME = EXEC(“C:\Program Files\Google\Chrome\Application\chrome.exe”)
+// クリック位置の調整
+Const offset=15
+//現在開いているchrome を選択、アクティブに。
+id = GETID("Google Chrome","Chrome_WidgetWin_1",-1)
+// ctrlwin(id,max)
+// SLEEP(2)
+
+// URL="https://bill.ntt-finance.co.jp/mem-view/WA001G01E00.do"
+EXEC(TRIM(DOSCMD("echo %USERPROFILE%"))+"\Local Settings\Application Data\Google\Chrome\Application\chrome.exe")
+
+// URL入力欄へカーソルを移動
+sckey(id, vk_alt,vk_d)
+
+//URLを削除
+sckey(id, vk_delete)
+
+//googleへの移動文字列を入力
+sendstr(id,"https://dai2.inaba.co.jp/dai2/login.aspx")
+
+//enterを送信し、移動
+sckey(id, vk_enter)
+
+SLEEP(2)
+waitIMG(".\img\logoin.bmp",3)
+// ログインボタンをクリック
+clickIMG(".\img\logoin.bmp",3)
+SLEEP(2)
+waitIMG(".\img\inaba.bmp",3)
+// 照会ボタンをクリック
+clickIMG(".\img\inaba.bmp",3)
+SLEEP(2)
+
+waitIMG(".\img\denshi.bmp",3)
+// 詳細ボタンをクリック
+clickIMG(".\img\denshi.bmp",3)
+SLEEP(2)
+
+
+//---------------------------------------電機
+//初期化
+fukidasi("因幡電機")
+waitIMG(".\img\82910008.bmp",3)
+// ｃｓｖボタンをクリック
+clickIMG(".\img\82910008.bmp",3)
+
+imagekaku=FALSE
+//画像探しのループ
+//目的の画像が一度見つかってそれが消えるまで回り続ける
+While TRUE
+　　//画像の判定
+// waitIMG(".\img\pdf.bmp",3)
+// // downloadボタンをクリック
+// clickIMG(".\img\pdf.bmp",3)
+  if clickIMG(".\img\pdf.bmp",3) then imagekaku = TRUE
+　　Ifb imagekaku=FALSE and clickIMG(".\img\pdf.bmp",3)=FALSE Then 
+　　fukidasi("因幡電機画像なし")
+    id = GETID("Web帳票サービス - Google Chrome") // web帳票を閉じる
+    CTRLWIN(id, CLOSE)
+    imagekaku=FALSE
+    BREAK
+    endif
+Wend
+fukidasi("因幡電機終わり")
+
+id = GETID("Web帳票サービ因幡電機Ｗｅｂ発注 DAI2 電子納品書 - Google Chrome") // web帳票を閉じる
+CTRLWIN(id, CLOSE)
+//---------------------------------------電線
+fukidasi("因幡電線")
+
+//初期化
+waitIMG(".\img\82910009.bmp",3)
+// ｃｓｖボタンをクリック
+clickIMG(".\img\82910009.bmp",3)
+
+imagekaku=FALSE
+//画像探しのループ
+//目的の画像が一度見つかってそれが消えるまで回り続ける
+While TRUE
+　　//画像の判定
+// waitIMG(".\img\pdf.bmp",3)
+// // downloadボタンをクリック
+// clickIMG(".\img\pdf.bmp",3)
+  if clickIMG(".\img\pdf.bmp",3) then imagekaku = TRUE
+　　Ifb imagekaku=FALSE and clickIMG(".\img\pdf.bmp",3)=FALSE Then 
+    id = GETID("Web帳票サービス - Google Chrome") // web帳票を閉じる
+    CTRLWIN(id, CLOSE)
+    imagekaku=FALSE
+    BREAK
+    endif
+Wend
+fukidasi("終了")
+
+
+
+// 画像を検出してその位置をクリックする
+Procedure clickIMG(imgFileName,wait)
+  IFB CHKIMG(imgFileName) 
+    BTN(LEFT,CLICK, G_IMG_X+offset, G_IMG_Y+offset)
+    Sleep(wait)
+  ELSE
+    // MSGBOX("画像認識に失敗しました。")
+    // EXITEXIT
+  ENDIF
+Fend
+
+// 画像を検出してその位置をダブルクリックする
+Procedure wclickIMG(imgFileName,wait)
+  IFB CHKIMG(imgFileName) 
+    BTN(LEFT,CLICK, G_IMG_X+offset, G_IMG_Y+offset)
+    BTN(LEFT,CLICK, G_IMG_X+offset, G_IMG_Y+offset)
+    Sleep(wait)
+  ELSE
+    MSGBOX("画像認識に失敗しました。")
+    // EXITEXIT
+  ENDIF
+Fend
+
+// 画像を検出するまで待ち受ける
+Procedure waitIMG(imgFileName,wait)
+  While 1
+    IFB CHKIMG(imgFileName) 
+      break
+    ELSE
+      Sleep(wait)
+    ENDIF
+  Wend
+Fend
