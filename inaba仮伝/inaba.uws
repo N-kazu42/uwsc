@@ -91,6 +91,8 @@ While TRUE
 Wend
 fukidasi("終了")
 
+id = GETID("因幡電機Ｗｅｂ発注 DAI2 電子納品書 - Google Chrome") // web帳票を閉じる
+    CTRLWIN(id, CLOSE)
 
 
 // 画像を検出してその位置をクリックする

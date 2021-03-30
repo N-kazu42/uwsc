@@ -1,0 +1,50 @@
+FUNCTION get_pic(id)
+            cancel=0
+WHILE (cancel=0)
+      SELECT SLCTBOX(slct_btn,0,1,400,“画像を取得します。“,“取得“,“5秒後に取得“)
+      CASE –1
+            cancel=1
+      CASE 1
+            wait=0
+      CASE 2
+            wait=1
+      SELEND
+   IF cancel=0
+            PRINT “準備しています。“
+      IF id<>–1
+         IF STATUS(id,ST_ICON)//最小化状態かどうか
+            CTRLWIN(id,NORMAL)//通常表示に
+         ENDIF
+         IF !STATUS(id,ST_ACTIVE)//非アクティブかどうか
+            CTRLWIN(id,ACTIVATE)//アクティブに
+         ENDIF
+      ELSE
+            PRINT “アプリが見つからないので全体画像を取得します。“
+      ENDIF
+      IF wait=1
+         FOR i=5 TO 1 step –1
+            PRINT i+“秒後に取得します。“
+            SLEEP(1)
+         NEXT
+      ENDIF
+            n=0
+      WHILE (0=0)
+            path=GET_CUR_DIR+“\画像_“+REPLACE(FORMAT(n,4),“ “,“0“)+“.bmp“
+         IF FOPEN(path,F_EXISTS)
+            n=n+1
+         ELSE
+         IF id<>–1
+            SAVEIMG(path,id)
+         ELSE
+            SAVEIMG(path)
+         ENDIF
+            PRINT “画像を取得しました。“
+            break
+         ENDIF
+      SLEEP(0.1)
+      WEND
+   ENDIF
+SLEEP(0.05)
+WEND
+            RESULT=1
+FEND

@@ -72,7 +72,103 @@ KBD(VK_RETURN,CLICK,8)
 ENDIF
 
 //-----------------------------------------------------------------
-ACW(GETID("�̔��Ǘ��V�X�e�� IC-M_Ver6 [����c�Ə�    24:����@�a��]","TFrmMML0000"),613,336,1017,656,0)
-BTN(LEFT,CLICK,710,829,218)
-BTN(LEFT,CLICK,1240,540,1093)
-BTN(LEFT,CLICK,1246,632,15)
+fukidasi("仕入")
+Const offset=5
+// 販売管理システム IC-M_Ver6 [松阪営業所    24:長井　和昭]
+// 17:メインメニュー画面　継承元
+id = GETID("販売管理システム IC-M_Ver6") // web帳票を閉じる
+CTRLWIN(id, ACTIVATE)
+id = GETID("メインメニュー画面　継承元") // web帳票を閉じる
+CTRLWIN(id, ACTIVATE)
+fukidasi("仕入1")
+waitIMG(".\img\WS000000.BMP",3)
+// ｃｓｖボタンをクリック
+clickIMG(".\img\WS000000.BMP",3)
+fukidasi("仕入2")
+id = GETID("販売管理システム IC-M_Ver6") // web帳票を閉じる
+CTRLWIN(id, ACTIVATE)
+id = GETID("メインメニュー画面　継承元") // web帳票を閉じる
+CTRLWIN(id, ACTIVATE)
+waitIMG(".\img\WS000001.bmp",3)
+// ｃｓｖボタンをクリック
+clickIMG(".\img\WS000001.bmp",3)
+id = GETID("販売管理システム IC-M_Ver6") // web帳票を閉じる
+CTRLWIN(id, ACTIVATE)
+id = GETID("メインメニュー画面　継承元") // web帳票を閉じる
+CTRLWIN(id, ACTIVATE)
+fukidasi("仕入3")
+waitIMG(".\img\WS000002.bmp",3)
+// ｃｓｖボタンをクリック
+clickIMG(".\img\WS000002.bmp",3)
+
+// 画像を検出してその位置をクリックする
+Procedure clickIMG(imgFileName,wait)
+  IFB CHKIMG(imgFileName) 
+    BTN(LEFT,CLICK, G_IMG_X+offset, G_IMG_Y+offset)
+    Sleep(wait)
+  ELSE
+    fukidasi("待機")
+    // MSGBOX("画像認識に失敗しました。")
+    // EXITEXIT
+  ENDIF
+Fend
+
+// 画像を検出してその位置をダブルクリックする
+Procedure wclickIMG(imgFileName,wait)
+  IFB CHKIMG(imgFileName) 
+    BTN(LEFT,CLICK, G_IMG_X+offset, G_IMG_Y+offset)
+    BTN(LEFT,CLICK, G_IMG_X+offset, G_IMG_Y+offset)
+    Sleep(wait)
+  ELSE
+    MSGBOX("画像認識に失敗しました。")
+    // EXITEXIT
+  ENDIF
+Fend
+
+// 画像を検出するまで待ち受ける
+Procedure waitIMG(imgFileName,wait)
+  While 1
+  fukidasi("ないな")
+    IFB CHKIMG(imgFileName) 
+      break
+    ELSE
+      Sleep(wait)
+    ENDIF
+  Wend
+Fend
+
+
+
+// 画像を検出してその位置をクリックする
+Procedure clickIMG(imgFileName,wait)
+  IFB CHKIMG(imgFileName) 
+    BTN(LEFT,CLICK, G_IMG_X+offset, G_IMG_Y+offset)
+    Sleep(wait)
+  ELSE
+    // MSGBOX("画像認識に失敗しました。")
+    // EXITEXIT
+  ENDIF
+Fend
+
+// 画像を検出してその位置をダブルクリックする
+Procedure wclickIMG(imgFileName,wait)
+  IFB CHKIMG(imgFileName) 
+    BTN(LEFT,CLICK, G_IMG_X+offset, G_IMG_Y+offset)
+    BTN(LEFT,CLICK, G_IMG_X+offset, G_IMG_Y+offset)
+    Sleep(wait)
+  ELSE
+    MSGBOX("画像認識に失敗しました。")
+    // EXITEXIT
+  ENDIF
+Fend
+
+// 画像を検出するまで待ち受ける
+Procedure waitIMG(imgFileName,wait)
+  While 1
+    IFB CHKIMG(imgFileName) 
+      break
+    ELSE
+      Sleep(wait)
+    ENDIF
+  Wend
+Fend
